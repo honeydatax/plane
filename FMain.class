@@ -1,6 +1,8 @@
 ' Gambas class file
 
+Public yyy As Integer
 Public yy As Integer
+Public xx As Integer
 Public img As Image
 Public Sub _new()
 
@@ -11,8 +13,11 @@ Draw.FillRect(0, 0, DrawingArea1.Width, yy, Color.Gray)
 Draw.FillRect(0, yy, DrawingArea1.Width, DrawingArea1.Height, Color.Black)
 Draw.Foreground = Color.white
 Draw.FillColor = Color.Black
-Draw.Line(0, DrawingArea1.Height, DrawingArea1.w / 2, yy)
-Draw.Line(DrawingArea1.Width / 2, yy, DrawingArea1.Width, DrawingArea1.Height)
+Draw.LineStyle = Line.Solid
+Draw.Line(xx - DrawingArea1.Width / 2, DrawingArea1.Height, xx, yy)
+Draw.Line(xx, yy, xx + DrawingArea1.Width / 2, DrawingArea1.Height)
+Draw.LineStyle = Line.DashDotDot
+Draw.Line(xx, yy + yyy, xx, DrawingArea1.Height)
 Draw.End
 DrawingArea1.Refresh(0, 0, DrawingArea1.Width, DrawingArea1.Height)
 Form.Refresh()
@@ -23,18 +28,34 @@ DrawingArea1.Refresh(0, 0, Form.Width, Form.Height)
 End
 
 
+Public Sub Form_KeyPress()
+  If Key.Code = 65362 Then yy = yy - 5
+  If Key.Code = 65364 Then yy = yy + 5
+  If Key.Code = 65361 Then xx = xx - 5
+  If Key.Code = 65363 Then xx = xx + 5
+  If yy > 260 Then yy = 260  
+  If yy < 20 Then yy = 20
+  If xx > DrawingArea1.Width - 20 Then xx = DrawingArea1.Width - 20
+  If xx < 20 Then xx = 20
+  If Key.Code = 65307 Then Me.Close()
+  'Print Key.Code
+End
+
 
 Public Sub form_Activate()
+xx = DrawingArea1.Width / 2
+Me.Title = "press arrow keys to drive"
 End
 
 Public Sub Form_Open()
 yy = 20
+yyy = 1
 Timer1.Enabled = True
 End
 
 
 
 Public Sub Timer1_Timer()
-yy = yy + 5
-If yy > 200 Then Timer1.Enabled = False
+yyy = yyy + 1
+If yyy > 8 Then yyy = 0 
 End
