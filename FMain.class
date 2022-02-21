@@ -1,0 +1,40 @@
+' Gambas class file
+
+Public yy As Integer
+Public img As Image
+Public Sub _new()
+
+End
+Public Sub DrawingArea1_Draw()
+Draw.Begin(DrawingArea1)
+Draw.FillRect(0, 0, DrawingArea1.Width, yy, Color.Gray)
+Draw.FillRect(0, yy, DrawingArea1.Width, DrawingArea1.Height, Color.Black)
+Draw.Foreground = Color.white
+Draw.FillColor = Color.Black
+Draw.Line(0, DrawingArea1.Height, DrawingArea1.w / 2, yy)
+Draw.Line(DrawingArea1.Width / 2, yy, DrawingArea1.Width, DrawingArea1.Height)
+Draw.End
+DrawingArea1.Refresh(0, 0, DrawingArea1.Width, DrawingArea1.Height)
+Form.Refresh()
+End
+
+Public Sub Form_Show()
+DrawingArea1.Refresh(0, 0, Form.Width, Form.Height)    
+End
+
+
+
+Public Sub form_Activate()
+End
+
+Public Sub Form_Open()
+yy = 20
+Timer1.Enabled = True
+End
+
+
+
+Public Sub Timer1_Timer()
+yy = yy + 5
+If yy > 200 Then Timer1.Enabled = False
+End
